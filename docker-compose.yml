@@ -4,6 +4,13 @@ services:
   jenkins:
     image: zeburrehman/jenkins:lts
     entrypoint: ["/sbin/tini", "--", "/usr/local/bin/jenkins-init.sh"]
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints:
+          - node.hostname == zrehman-Virtual-Machine
     volumes:
       - jenkins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
@@ -15,6 +22,7 @@ services:
       - source: jenkins-init.sh
         target: /usr/local/bin/jenkins-init.sh
         mode: 0777
+
 volumes:
   jenkins_data:
     driver: local
