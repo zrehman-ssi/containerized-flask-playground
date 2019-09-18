@@ -1,3 +1,5 @@
+#!/bin/sh
+
 DATE=$(date -I)
 
 docker build . --no-cache -t zeburrehman/jenkins:$DATE
